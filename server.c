@@ -6,7 +6,7 @@
 /*   By: aoussama <aoussama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 09:49:30 by aoussama          #+#    #+#             */
-/*   Updated: 2025/01/21 22:07:30 by aoussama         ###   ########.fr       */
+/*   Updated: 2025/01/24 18:19:06 by aoussama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 void handle_signal(int sig) {
     static int bit = 0;
     static char character = 0;
+    
 
 
     if (sig == SIGUSR1) {
@@ -29,7 +30,6 @@ void handle_signal(int sig) {
         bit = 0;            
     }
 }
-
 int main() {
    
     printf("(PID): %d\n", getpid());

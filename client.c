@@ -6,7 +6,7 @@
 /*   By: aoussama <aoussama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 09:48:58 by aoussama          #+#    #+#             */
-/*   Updated: 2025/01/21 22:03:44 by aoussama         ###   ########.fr       */
+/*   Updated: 2025/01/24 18:19:02 by aoussama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ void send_bit(char character, int pid)
     int bit = 0;
     int ascii;
     ascii = (int)character;
+    printf("%d",ascii);
     while(bit < 8)
     {
-        if((ascii >> bit)&1)
+        if((ascii >> bit)& 1 == 1)
         {
             kill(pid, SIGUSR1);
         }
@@ -57,13 +58,18 @@ void send_bit(char character, int pid)
     }
     
 }
-
+void hndl_ctl_c(int c)
+{  
+    (void)c;
+    write(1,"",0);
+}
 int main(int ac,char **av)
 {
     int i;
     int pid;
 
     i = 0;
+    signal(SIGINT, hndl_ctl_c);
     if (ac == 3)
     {
         pid = ft_atoi(av[1]);
