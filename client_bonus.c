@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aoussama <aoussama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/17 09:48:58 by aoussama          #+#    #+#             */
-/*   Updated: 2025/04/05 14:02:38 by aoussama         ###   ########.fr       */
+/*   Created: 2025/04/05 09:02:37 by aoussama          #+#    #+#             */
+/*   Updated: 2025/04/05 11:17:54 by aoussama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_talk.h"
+#include "mini_talk_bonus.h"
 
 static int	g_flag;
 
@@ -18,6 +18,13 @@ static void	success(int signl)
 {
 	g_flag = 1;
 	(void)signl;
+}
+
+void	finish_send(int sig)
+{
+	(void)sig;
+	write(1, "\033[32mMessage sent successfully!\033[0m\n", 37);
+	exit(0);
 }
 
 static void	send_bit(char character, int pid)
@@ -63,10 +70,12 @@ int	main(int ac, char **av)
 	chek_pid(av[1]);
 	pid = ft_atoi(av[1]);
 	signal(SIGUSR1, success);
+	signal(SIGUSR2, finish_send);
 	while (av[2][i])
 	{
 		send_bit(av[2][i], pid);
 		i++;
 	}
+	send_bit(av[2][i], pid);
 	return (0);
 }

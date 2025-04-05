@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aoussama <aoussama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/17 09:49:30 by aoussama          #+#    #+#             */
-/*   Updated: 2025/04/05 09:16:07 by aoussama         ###   ########.fr       */
+/*   Created: 2025/04/05 09:06:32 by aoussama          #+#    #+#             */
+/*   Updated: 2025/04/05 11:12:22 by aoussama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_talk.h"
+#include "mini_talk_bonus.h"
 
 static void	ft_putchar_fd(char c, int fd)
 {
@@ -49,12 +49,12 @@ static void	handle_signal(int sig, siginfo_t *info, void *ucontext)
 		bit = 0;
 	}
 	if (sig == SIGUSR1)
-	{
 		character |= (1 << bit);
-	}
 	bit++;
 	if (bit == 8)
 	{
+		if (character == '\0')
+			kill(pid_clt, SIGUSR2);
 		write(1, &character, 1);
 		character = 0;
 		bit = 0;
